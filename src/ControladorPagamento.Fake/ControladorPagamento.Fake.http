@@ -1,0 +1,6 @@
+@ControladorPagamento.Fake_HostAddress = http://localhost:5083
+
+GET {{ControladorPagamento.Fake_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

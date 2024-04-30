@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "CkZ58Gz9194chzjzPDWgg3LDAiqVmbDZ/ruwY8q+uy4=",
+  "Source": "ControladorPagamento.Fake",
+  "BasePath": "_content/ControladorPagamento.Fake",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

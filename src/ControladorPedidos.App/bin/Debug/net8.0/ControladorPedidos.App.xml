@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ControladorPedidos.App</name>
+    </assembly>
+    <members>
+        <member name="M:ControladorPedidos.App.Controllers.PagamentoController.Put(System.Guid)">
+            <summary>
+            Realiza pagamento do pedido
+            </summary>
+            <param name="pedidoId">Id do pedido</param>
+            <response code="201">Pagamento do pedido realizado com sucesso.</response>
+            <response code="400">Erro ao fazer a Request.</response>
+        </member>
+        <member name="M:ControladorPedidos.App.Controllers.PagamentoController.Get(System.Guid)">
+            <summary>
+            Verifica o status do pagamento do pedido
+            </summary>
+            <param name="pedidoId">Id do pedido</param>
+            <response code="200">Retorna se pagamento foi aprovado ou não.</response>
+            <response code="400">Bad request.</response>
+            <response code="404">Não encontrado.</response>
+            <response code="500">Erro interno.</response>
+        </member>
+        <member name="M:ControladorPedidos.App.Controllers.PagamentoController.Post(ControladorPedidos.App.Presenters.PagamentoWebhookDto)">
+            <summary>
+            Realiza conclusão do pagamento do pedido
+            </summary>
+            <param name="pagamentoWebhookDto">Dados do pagamento</param>
+            <response code="201">Pagamento do pedido realizado com sucesso.</response>
+            <response code="400">Erro ao fazer a Request.</response>
+        </member>
+    </members>
+</doc>

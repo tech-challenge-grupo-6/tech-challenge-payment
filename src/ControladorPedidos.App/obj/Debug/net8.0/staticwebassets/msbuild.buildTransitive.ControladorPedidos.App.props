@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/ControladorPedidos.App.props" />
+</Project>
