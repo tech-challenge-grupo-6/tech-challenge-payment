@@ -10,13 +10,16 @@ namespace ControladorPedidos.App.Controllers;
 [Route("[controller]")]
 public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger) : ControllerBase
 {
+
+    private string? token;
+
     /// <summary>
     /// Realiza pagamento do pedido
     /// </summary>
     /// <param name="pedidoId">Id do pedido</param>
     /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
-    [Authorize]
+    //[Authorize]
     [HttpPut("pagar/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -25,7 +28,8 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
         try
         {
             logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
-            await pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
+            token = HttpContext.Request.Headers["Authorization"];
+            await pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId, token);
             return CreatedAtAction(nameof(Put), new { message = "Pedido de pagamento efetuado com sucesso" });
         }
         catch (Exception ex)
@@ -86,9 +90,9 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
         var (pedidoId, aprovado, motivo) = pagamentoWebhookDto;
         try
         {
-
             logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
-            Guid? pagamentoId = await pagamentoUseCase.ConcluirPagamento(pedidoId, aprovado, motivo);
+            token = HttpContext.Request.Headers["Authorization"];
+            Guid? pagamentoId = await pagamentoUseCase.ConcluirPagamento(pedidoId, aprovado, motivo, token);
             if (pagamentoId is null)
             {
                 return BadRequest($"Pagamento do pedido {pedidoId} não foi aprovado. Motivo: {motivo}");

@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/victor/Desktop/aplicacao-teste/tech-challenge-payment/tests/ControladorPedidos.Tests/ControladorPedidos.Tests.csproj": {}
+    "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\ControladorPedidos.Tests.csproj": {}
   },
   "projects": {
-    "/home/victor/Desktop/aplicacao-teste/tech-challenge-payment/tests/ControladorPedidos.Tests/ControladorPedidos.Tests.csproj": {
+    "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\ControladorPedidos.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/victor/Desktop/aplicacao-teste/tech-challenge-payment/tests/ControladorPedidos.Tests/ControladorPedidos.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\ControladorPedidos.Tests.csproj",
         "projectName": "ControladorPedidos.Tests",
-        "projectPath": "/home/victor/Desktop/aplicacao-teste/tech-challenge-payment/tests/ControladorPedidos.Tests/ControladorPedidos.Tests.csproj",
-        "packagesPath": "/home/victor/.nuget/packages/",
-        "outputPath": "/home/victor/Desktop/aplicacao-teste/tech-challenge-payment/tests/ControladorPedidos.Tests/obj/",
+        "projectPath": "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\ControladorPedidos.Tests.csproj",
+        "packagesPath": "C:\\Users\\victor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/victor/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -75,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

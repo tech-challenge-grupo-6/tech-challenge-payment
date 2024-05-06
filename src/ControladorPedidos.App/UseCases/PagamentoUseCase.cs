@@ -4,17 +4,19 @@ using ControladorPedidos.App.Entities.Repositories;
 using ControladorPedidos.App.Entities.Shared;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Presenters;
+using System.Net.Http.Headers;
 
 namespace ControladorPedidos.App.UseCases;
 
-public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<PagamentoUseCase> logger, IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
+public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<PagamentoUseCase> logger, 
+    IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
-    public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId)
+    public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token)
     {
         logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
         try
         {
-            Pedido? pedido = await pedidoRepository.GetById(pedidoId);
+            Pedido? pedido = await ObterPedidoPorIdAsync(pedidoId, token);
 
             if (pedido is null)
             {
@@ -57,7 +59,7 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
         }
     }
 
-    public async Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo)
+    public async Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo, string? token)
     {
         logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
         try
@@ -69,7 +71,7 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
             }
             else
             {
-                var pedido = await pedidoRepository.GetById(pedidoId) ?? throw new NotFoundException("Pedido não encontrado.");
+                var pedido = await ObterPedidoPorIdAsync(pedidoId, token) ?? throw new NotFoundException("Pedido não encontrado.");
                 Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
                 await pagamentoRepository.Add(pagamento);
                 await pedidoRepository.UpdateStatus(pedido);
@@ -80,6 +82,28 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
         catch (Exception ex)
         {
             logger.LogError(ex, "Erro ao concluir pagamento do pedido {PedidoId}", pedidoId);
+            throw;
+        }
+    }
+
+    public async Task<Pedido?> ObterPedidoPorIdAsync(Guid pedidoId, string? token)
+    {
+        logger.LogWarning("Consultando serviço externo de pedido");
+
+        // Configure o cabeçalho de autorização com o token Bearer
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        string? pedidoUrl = configuration.GetValue<string>("PedidoUrl");
+
+        try
+        {
+            Pedido[]? pedidos = await httpClient.GetFromJsonAsync<Pedido[]>(pedidoUrl);
+            IEnumerable<Pedido> pedido = pedidos.Where(x => x.Id == pedidoId);
+
+            return pedido.Any() ? pedido.First() : null;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao consultar o serviço de pedido", pedidoId);
             throw;
         }
     }
