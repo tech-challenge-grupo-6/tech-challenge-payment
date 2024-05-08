@@ -107,4 +107,21 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
             throw;
         }
     }
+
+    public async Task<bool> ObterStatusDoPedidoAsync(Guid pedidoId)
+    {
+        logger.LogWarning("Consultando status do pedido {PedidoId}", pedidoId);
+        try
+        {
+            Pagamento? statusPedido = await pagamentoRepository.GetByPedidoId(pedidoId);
+
+            return statusPedido?.Pedido.Status == Status.Recebido ? true : false ;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Erro ao consultar o status do pedido", pedidoId);
+            throw;
+        }
+        
+    }
 }
