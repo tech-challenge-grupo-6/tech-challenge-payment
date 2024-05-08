@@ -30,5 +30,15 @@
             <response code="201">Pagamento do pedido realizado com sucesso.</response>
             <response code="400">Erro ao fazer a Request.</response>
         </member>
+        <member name="M:ControladorPedidos.App.Controllers.PagamentoController.GetStatus(System.Guid)">
+            <summary>
+            Verifica o status do pagamento do pedido
+            </summary>
+            <param name="pedidoId">Id do pedido</param>
+            <response code="200">Retorna se pagamento foi aprovado ou não.</response>
+            <response code="400">Bad request.</response>
+            <response code="404">Não encontrado.</response>
+            <response code="500">Erro interno.</response>
+        </member>
     </members>
 </doc>
