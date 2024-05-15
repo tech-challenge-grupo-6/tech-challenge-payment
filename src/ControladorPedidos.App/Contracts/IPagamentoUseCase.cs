@@ -9,4 +9,5 @@ public interface IPagamentoUseCase
     Task<Pagamento> ConsultarPagamentoPeloPedido(Guid pedidoId);
     Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo, string? token);
     Task<bool> ObterStatusDoPedidoAsync(Guid pedidoId);
+    Task<Pedido?> ObterPedidoPorIdAsync(Guid pedidoId, string? token);
 }

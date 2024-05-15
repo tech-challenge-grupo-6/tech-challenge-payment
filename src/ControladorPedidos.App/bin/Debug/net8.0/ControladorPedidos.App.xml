@@ -40,5 +40,17 @@
             <response code="404">Não encontrado.</response>
             <response code="500">Erro interno.</response>
         </member>
+        <member name="T:ControladorPedidos.App.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ControladorPedidos.App.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ControladorPedidos.App.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ControladorPedidos.App.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

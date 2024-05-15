@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 
 namespace ControladorPedidos.App.UseCases;
 
-public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<PagamentoUseCase> logger, 
+public class PagamentoUseCase(ILogger<PagamentoUseCase> logger, 
     IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
     public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token)
@@ -73,8 +73,8 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
             {
                 var pedido = await ObterPedidoPorIdAsync(pedidoId, token) ?? throw new NotFoundException("Pedido não encontrado.");
                 Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
+
                 await pagamentoRepository.Add(pagamento);
-                await pedidoRepository.UpdateStatus(pedido);
                 logger.LogInformation("Pagamento do pedido {PedidoId} concluído com sucesso", pedidoId);
                 return pagamento.Id;
             }
@@ -91,7 +91,7 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
         logger.LogWarning("Consultando serviço externo de pedido");
 
         // Configure o cabeçalho de autorização com o token Bearer
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", ""));
         string? pedidoUrl = configuration.GetValue<string>("PedidoUrl");
 
         try
@@ -115,7 +115,7 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
         {
             Pagamento? statusPedido = await pagamentoRepository.GetByPedidoId(pedidoId);
 
-            return statusPedido?.Pedido.Status == Status.Recebido ? true : false ;
+            return statusPedido?.Status == Status.Recebido ? true : false ;
         }
         catch (Exception e)
         {

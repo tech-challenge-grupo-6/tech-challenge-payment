@@ -1,0 +1,42 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: "3.4"
+
+services:
+  database_mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssWord
+      MYSQL_DATABASE: controlador_pagamentos
+    ports:
+      - 3309:3306
+    expose:
+      - 3309
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - controladorpedidos-network
+    restart: always
+
+  controladorpagamentofake:
+    image: controladorpagamentofake
+    build:
+      context: .
+      dockerfile: src/ControladorPagamento.Fake/Dockerfile
+    ports:
+      - 5083:5083
+    expose:
+      - 5083
+    environment:
+      - TaxaAprovacao=100
+      - WebhookUrl=http://controladorpedidosapp:5003/Pagamento/webhook
+    networks:
+      - controladorpedidos-network
+    restart: on-failure
+
+networks:
+  controladorpedidos-network:
+    driver: bridge
+volumes:
+  mysql_data:
+    driver: local
