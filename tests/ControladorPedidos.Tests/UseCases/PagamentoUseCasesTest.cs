@@ -86,8 +86,5 @@ public class PagamentoUseCaseTest
         Assert.NotNull(result);
         Assert.Equal(pedidoId, result.PedidoId);
     }
-
-
-
 }
 
