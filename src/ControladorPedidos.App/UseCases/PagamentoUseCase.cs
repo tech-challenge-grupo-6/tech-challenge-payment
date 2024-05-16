@@ -115,7 +115,9 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
         {
             Pagamento? statusPedido = await pagamentoRepository.GetByPedidoId(pedidoId);
 
-            return statusPedido?.Status == Status.Recebido ? true : false ;
+            bool pagamentoAprovado = statusPedido?.Status == Status.Recebido;
+            
+            return pagamentoAprovado;
         }
         catch (Exception e)
         {

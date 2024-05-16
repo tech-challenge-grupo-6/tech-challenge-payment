@@ -231,7 +231,6 @@ C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\Control
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\MySql.Data.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\MySql.EntityFrameworkCore.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\NSubstitute.dll
-C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\BouncyCastle.Crypto.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -255,3 +254,4 @@ C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\Control
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\ControladorPedidos.App.dll
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\ControladorPedidos.App.pdb
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\ControladorPedidos.App.xml
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\tests\ControladorPedidos.Tests\bin\Debug\net8.0\BouncyCastle.Cryptography.dll

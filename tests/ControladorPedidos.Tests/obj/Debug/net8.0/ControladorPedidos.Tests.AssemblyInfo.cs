@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ControladorPedidos.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+869fe2abdc039ccddc2d3b80e4aba43b5b78ab6d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e945f89ab0d3c23a67595f5c5c1c7af865fa8082")]
 [assembly: System.Reflection.AssemblyProductAttribute("ControladorPedidos.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ControladorPedidos.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

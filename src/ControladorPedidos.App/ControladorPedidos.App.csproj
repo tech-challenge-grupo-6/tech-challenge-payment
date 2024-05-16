@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Models\**" />
+    <Content Remove="Entities\Models\**" />
+    <EmbeddedResource Remove="Entities\Models\**" />
+    <None Remove="Entities\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.2" />
@@ -32,7 +39,6 @@
     <Folder Include="Controllers/" />
     <Folder Include="Entities/" />
     <Folder Include="Entities/Exceptions/" />
-    <Folder Include="Entities/Models/" />
     <Folder Include="Entities/Repositories/" />
     <Folder Include="Entities/Shared/" />
     <Folder Include="Entities/Validators/" />
