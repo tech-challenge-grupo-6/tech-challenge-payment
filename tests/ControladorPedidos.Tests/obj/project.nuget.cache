@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lZsydJdUDfovUGa5uNivECsZzfYCja4MQAeSdjRyu9MvDhmvFMpPxkl3FX+PNxQw6FH35IMTGc9BnJEmeBXoCw==",
+  "dgSpecHash": "K9qj+wXeDwG+hUZOkMIAWrQmeaKAMKBpQW6/EbPMJc60P0zpQ5uCqW+1+jp7rd1BvzUJovZdscSHVTBrC9o7UQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\victor\\Desktop\\tech-challenge-fiap\\tech-challenge-payment\\tests\\ControladorPedidos.Tests\\ControladorPedidos.Tests.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.5\\microsoft.entityframeworkcore.8.0.5.nupkg.sha512",
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.5\\microsoft.entityframeworkcore.abstractions.8.0.5.nupkg.sha512",
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.5\\microsoft.entityframeworkcore.analyzers.8.0.5.nupkg.sha512",
+    "C:\\Users\\victor\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.0\\microsoft.entityframeworkcore.inmemory.8.0.0.nupkg.sha512",
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.2\\microsoft.entityframeworkcore.relational.8.0.2.nupkg.sha512",
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\victor\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",

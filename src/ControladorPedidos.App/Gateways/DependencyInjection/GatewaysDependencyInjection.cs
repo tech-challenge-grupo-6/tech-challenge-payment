@@ -7,7 +7,6 @@ public static class GatewaysDependencyInjection
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IPagamentoRepository, PagamentoRepository>();
-        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
         return services;
     }
