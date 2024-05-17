@@ -6,7 +6,19 @@
         <Configuration>
           <Format>cobertura</Format>
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
-          <ExcludeByFile>**/Program.cs,**/Infrastructure/**/*.cs,**/Infrastructure/*.cs,**/Migrations/*.cs,**/Gateways/DependencyInjection/*.cs,**/Application/Exceptions/Models/*.cs</ExcludeByFile>
+          <ExcludeByFile>
+          **/Program.cs,
+          **/Infrastructure/**/*.cs,
+          **/Infrastructure/*.cs,
+          **/Migrations/*.cs,
+          **/Presenters/*.cs,
+          **/Gateways/DependencyInjection/*.cs,
+          **/UseCases/DependencyInjection/*.cs,
+          **/Entities/*.cs,
+          **/Entities/Exceptions/*.cs,
+          **/Entities/Shared/*.cs,
+          **/Application/Exceptions/Models/*.cs
+          </ExcludeByFile>
           <SkipAutoProps>true</SkipAutoProps>
         </Configuration>
       </DataCollector>
