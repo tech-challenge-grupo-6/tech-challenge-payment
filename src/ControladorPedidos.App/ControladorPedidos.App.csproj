@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Entities\Models\**" />
+    <Compile Remove="Entities\Validators\**" />
     <Content Remove="Entities\Models\**" />
+    <Content Remove="Entities\Validators\**" />
     <EmbeddedResource Remove="Entities\Models\**" />
+    <EmbeddedResource Remove="Entities\Validators\**" />
     <None Remove="Entities\Models\**" />
+    <None Remove="Entities\Validators\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,7 +45,6 @@
     <Folder Include="Entities/Exceptions/" />
     <Folder Include="Entities/Repositories/" />
     <Folder Include="Entities/Shared/" />
-    <Folder Include="Entities/Validators/" />
     <Folder Include="Infrastructure/DataBase/Mappings/" />
     <Folder Include="UseCases/" />
   </ItemGroup>

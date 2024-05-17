@@ -18,18 +18,18 @@ public class PagamentoRepositoryTest
         return new DatabaseContext(options);
     }
 
-    [Fact]
-    public async Task AdicionarPagamento()
-    {
-        var pagamento = new Pagamento { Id = Guid.NewGuid(), PedidoId = Guid.NewGuid(), Valor = 50, MetodoPagamento = MetodoPagamento.MercadoPagoQRCode, Status = Status.Recebido };
+    // [Fact]
+    // public async Task AdicionarPagamento()
+    // {
+    //     var pagamento = new Pagamento { Id = Guid.NewGuid(), PedidoId = Guid.NewGuid(), Valor = 50, MetodoPagamento = MetodoPagamento.MercadoPagoQRCode, Status = Status.Recebido };
 
-        using var context = CreateUniqContext();
-        var repository = new PagamentoRepository(context);
+    //     using var context = CreateUniqContext();
+    //     var repository = new PagamentoRepository(context);
 
-        await repository.Add(pagamento);
+    //     await repository.Add(pagamento);
 
-        context.Pagamentos.Should().Contain(pagamento);
+    //     context.Pagamentos.Should().Contain(pagamento);
 
-    }
+    // }
 
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ControladorPedidos.App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2043f7ff7bd7ce7a80c45dbb3d8349735a3da33d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec0e9e302853cb89c5146009c16366d6b77b7390")]
 [assembly: System.Reflection.AssemblyProductAttribute("ControladorPedidos.App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ControladorPedidos.App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
