@@ -15,14 +15,13 @@ public class Pedido : EntityBase
     public Pagamento GerarPagamento(MetodoPagamento metodoPagamento)
     {
         ValorTotal = Produtos.Sum(p => p.Preco);
-        Status = Status.Recebido;
 
         Pagamento = new Pagamento
         {
-            Pedido = this,
             PedidoId = Id,
             Valor = ValorTotal,
-            MetodoPagamento = metodoPagamento
+            MetodoPagamento = metodoPagamento,
+            Status = Status.Recebido
         };
 
         return Pagamento;

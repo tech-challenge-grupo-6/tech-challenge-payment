@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControladorPedidos.App.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger) : ControllerBase
 {
@@ -20,7 +21,6 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     /// <param name="pedidoId">Id do pedido</param>
     /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
-    //[Authorize]
     [HttpPut("pagar/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -48,7 +48,6 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     /// <response code="400">Bad request.</response>
     /// <response code="404">Não encontrado.</response>
     /// <response code="500">Erro interno.</response>
-    [Authorize]
     [HttpGet("check/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -82,7 +81,6 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     /// <param name="pagamentoWebhookDto">Dados do pagamento</param>
     /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
-    [Authorize]
     [HttpPost("webhook")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -115,7 +113,6 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     /// <response code="400">Bad request.</response>
     /// <response code="404">Não encontrado.</response>
     /// <response code="500">Erro interno.</response>
-    //[Authorize]
     [HttpGet("status/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
