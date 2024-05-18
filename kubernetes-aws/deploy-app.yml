@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controladorpagamento
+  labels:
+    app: controladorpagamento
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controladorpagamento
+  template:
+    metadata:
+      labels:
+        app: controladorpagamento
+    spec:
+      containers:
+        - name: controladorpagamento
+          image: __CONTROLADOR_PEDIDO_IMAGE_NAME__
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: password
+            - name: ConnectionStrings__DefaultConnection
+              value: "Server=mysql-service;Database=controlador_pagametos;User=$(MYSQL_USER);Password=$(MYSQL_PASSWORD);port=3306;SslMode=None"
+            - name: PagamentoUrl
+              value: http://controladorpagamento-fake:5083/pagar
+            - name: AWS__Region
+              value: "us-east-1"
+            - name: AWS__UserPoolId
+              value: "__USER_POOL_ID__"
+            - name: AWS__AppClientId
+              value: "__CLIENT_ID__"
+          ports:
+            - containerPort: 5004
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: controladorpagamento
+spec:
+  selector:
+    app: controladorpagamento
+  ports:
+    - protocol: TCP
+      port: 5004
+      targetPort: 5004
+  type: LoadBalancer
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: controladorpagamento-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: controladorpagamento
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50

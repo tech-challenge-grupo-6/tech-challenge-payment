@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  type: ExternalName
+  externalName: __AWS_RDS_INSTANCE_URL__

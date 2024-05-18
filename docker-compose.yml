@@ -47,7 +47,7 @@ services:
       - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pagamentos;user=root;password=P@ssWord
       - PagamentoUrl=http://controladorpagamentofake:5083/pagar
     networks:
-      - controladorpagamento-network
+      - ControladorPagamento-network
     restart: on-failure
     depends_on:
       - database_mysql
