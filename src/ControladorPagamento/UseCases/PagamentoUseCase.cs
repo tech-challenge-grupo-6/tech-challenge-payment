@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 
 namespace ControladorPagamento.UseCases;
 
-public class PagamentoUseCase(ILogger<PagamentoUseCase> logger, 
+public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
     IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
     public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token)
@@ -96,10 +96,9 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
 
         try
         {
-            Pedido[]? pedidos = await httpClient.GetFromJsonAsync<Pedido[]>(pedidoUrl);
-            IEnumerable<Pedido> pedido = pedidos.Where(x => x.Id == pedidoId);
+            Pedido? pedido = await httpClient.GetFromJsonAsync<Pedido>($"{pedidoUrl}{pedidoId}");
 
-            return pedido.Any() ? pedido.First() : null;
+            return pedido;
         }
         catch (Exception ex)
         {
@@ -116,7 +115,7 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
             Pagamento? statusPedido = await pagamentoRepository.GetByPedidoId(pedidoId);
 
             bool pagamentoAprovado = statusPedido?.Status == Status.Recebido;
-            
+
             return pagamentoAprovado;
         }
         catch (Exception e)
@@ -124,6 +123,6 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
             logger.LogError(e, "Erro ao consultar o status do pedido", pedidoId);
             throw;
         }
-        
+
     }
 }
