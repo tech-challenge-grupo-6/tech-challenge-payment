@@ -91,7 +91,10 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
         logger.LogWarning("Consultando serviço externo de pedido");
 
         // Configure o cabeçalho de autorização com o token Bearer
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", ""));
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", ""));
+        }
         string? pedidoUrl = configuration.GetValue<string>("PedidoUrl");
 
         try
