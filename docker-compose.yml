@@ -15,7 +15,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - controladorpedidos-network
+      - ControladorPagamento-network
     restart: always
 
   controladorpagamentofake:
@@ -29,13 +29,32 @@ services:
       - 5083
     environment:
       - TaxaAprovacao=100
-      - WebhookUrl=http://controladorpedidosapp:5003/Pagamento/webhook
+      - WebhookUrl=http://ControladorPagamento:5004/Pagamento/webhook
     networks:
-      - controladorpedidos-network
+      - ControladorPagamento-network
     restart: on-failure
 
+  controladorpagamento:
+    image: controladorpagamento
+    build:
+      context: .
+      dockerfile: src/ControladorPagamento/Dockerfile
+    ports:
+      - 5004:5004
+    expose:
+      - 5004
+    environment:
+      - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pagamentos;user=root;password=P@ssWord
+      - PagamentoUrl=http://controladorpagamentofake:5083/pagar
+    networks:
+      - ControladorPagamento-network
+    restart: on-failure
+    depends_on:
+      - database_mysql
+      - controladorpagamentofake
+
 networks:
-  controladorpedidos-network:
+  ControladorPagamento-network:
     driver: bridge
 volumes:
   mysql_data:

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controladorpagamento-fake
+  labels:
+    app: controladorpagamento-fake
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controladorpagamento-fake
+  template:
+    metadata:
+      labels:
+        app: controladorpagamento-fake
+    spec:
+      containers:
+        - name: controladorpagamento-fake
+          image: __CONTROLADOR_PAGAMENTO_IMAGE_NAME__
+          env:
+            - name: TaxaAprovacao
+              value: "100"
+            - name: WebhookUrl
+              value: http://controladorpagamento:5004/Pagamento/webhook
+          ports:
+            - containerPort: 5004
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: controladorpagamento-fake
+spec:
+  selector:
+    app: controladorpagamento-fake
+  ports:
+    - protocol: TCP
+      port: 5083
+      targetPort: 5083
+  type: LoadBalancer
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: controladorpagamento-fake-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: controladorpagamento-fake
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
