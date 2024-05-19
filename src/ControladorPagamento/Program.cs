@@ -87,6 +87,10 @@ app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+if (builder.Environment.IsEnvironment("SUT"))
+    app.MapControllers().AllowAnonymous();
+else
+    app.MapControllers();
+
 
 app.Run();

@@ -14,8 +14,6 @@ public class Pedido : EntityBase
 
     public Pagamento GerarPagamento(MetodoPagamento metodoPagamento)
     {
-        ValorTotal = Produtos.Sum(p => p.Preco);
-
         Pagamento = new Pagamento
         {
             PedidoId = Id,

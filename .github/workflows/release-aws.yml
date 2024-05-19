@@ -20,7 +20,7 @@ jobs:
 
       - name: Get ECR Urls
         run: |
-          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
           controladorpagamento_fake_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
           echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos_app_ecr" >> $GITHUB_ENV
           echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento_fake_ecr" >> $GITHUB_ENV
@@ -59,7 +59,7 @@ jobs:
 
       - name: Get ECR Urls
         run: |
-          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
           controladorpagamento_fake_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
           echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos_app_ecr" >> $GITHUB_ENV
           echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento_fake_ecr" >> $GITHUB_ENV
@@ -75,7 +75,9 @@ jobs:
 
       - name: Get RDS instance name
         run: |
-          AWS_RDS_INSTANCE_URL=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].Endpoint.Address')
+          DB_NAME="controlador_pagamentos"
+          DB_INFO=$(aws rds describe-db-instances --region us-east-1 | jq -r --arg DB_NAME "$DB_NAME" '.DBInstances[] | select(.DBName == $DB_NAME)')
+          AWS_RDS_INSTANCE_URL=$(aws rds describe-db-instances --region us-east-1 | jq -r --arg DB_NAME "$DB_NAME" '.DBInstances[] | select(.DBName == $DB_NAME) | .Endpoint.Address')
           echo "AWS_RDS_INSTANCE_URL=$AWS_RDS_INSTANCE_URL" >> $GITHUB_ENV
 
       - name: Get Cognito Information

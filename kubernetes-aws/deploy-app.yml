@@ -32,12 +32,16 @@ spec:
               value: "Server=mysql-service;Database=controlador_pagametos;User=$(MYSQL_USER);Password=$(MYSQL_PASSWORD);port=3306;SslMode=None"
             - name: PagamentoUrl
               value: http://controladorpagamento-fake:5083/pagar
+            - name: PedidoUrl
+              value: http://controladorpedidos-app:5003/Pedido/
             - name: AWS__Region
               value: "us-east-1"
             - name: AWS__UserPoolId
               value: "__USER_POOL_ID__"
             - name: AWS__AppClientId
               value: "__CLIENT_ID__"
+            - name: ASPNETCORE_ENVIRONMENT
+              value: SUT
           ports:
             - containerPort: 5004
           resources:

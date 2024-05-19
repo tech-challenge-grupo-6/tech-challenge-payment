@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 
 namespace ControladorPagamento.UseCases;
 
-public class PagamentoUseCase(ILogger<PagamentoUseCase> logger, 
+public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
     IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
     public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token)
@@ -91,15 +91,17 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
         logger.LogWarning("Consultando serviço externo de pedido");
 
         // Configure o cabeçalho de autorização com o token Bearer
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", ""));
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Replace("Bearer", ""));
+        }
         string? pedidoUrl = configuration.GetValue<string>("PedidoUrl");
 
         try
         {
-            Pedido[]? pedidos = await httpClient.GetFromJsonAsync<Pedido[]>(pedidoUrl);
-            IEnumerable<Pedido> pedido = pedidos.Where(x => x.Id == pedidoId);
+            Pedido? pedido = await httpClient.GetFromJsonAsync<Pedido>($"{pedidoUrl}{pedidoId}");
 
-            return pedido.Any() ? pedido.First() : null;
+            return pedido;
         }
         catch (Exception ex)
         {
@@ -116,7 +118,7 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
             Pagamento? statusPedido = await pagamentoRepository.GetByPedidoId(pedidoId);
 
             bool pagamentoAprovado = statusPedido?.Status == Status.Recebido;
-            
+
             return pagamentoAprovado;
         }
         catch (Exception e)
@@ -124,6 +126,6 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
             logger.LogError(e, "Erro ao consultar o status do pedido", pedidoId);
             throw;
         }
-        
+
     }
 }
