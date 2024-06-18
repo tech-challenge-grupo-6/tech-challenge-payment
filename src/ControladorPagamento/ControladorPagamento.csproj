@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="3.0.1" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.7.301.19" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
@@ -39,14 +40,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts/" />
     <Folder Include="Controllers/" />
     <Folder Include="Entities/" />
     <Folder Include="Entities/Exceptions/" />
     <Folder Include="Entities/Repositories/" />
     <Folder Include="Entities/Shared/" />
     <Folder Include="Infrastructure/DataBase/Mappings/" />
-    <Folder Include="UseCases/" />
   </ItemGroup>
 
 </Project>

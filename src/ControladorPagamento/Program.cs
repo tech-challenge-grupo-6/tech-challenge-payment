@@ -1,8 +1,10 @@
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ControladorPagamento.Contracts;
 using ControladorPagamento.Gateways.DependencyInjection;
 using ControladorPagamento.Infrastructure.DataBase.DependencyInjection;
+using ControladorPagamento.UseCases;
 using ControladorPagamento.UseCases.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddRepositories();
 builder.Services.AddUseCases();
+builder.Services.AddScoped<IFilaSQS, FilaSQS>();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddHttpClient();
 builder.Services.AddAuthentication(x =>
