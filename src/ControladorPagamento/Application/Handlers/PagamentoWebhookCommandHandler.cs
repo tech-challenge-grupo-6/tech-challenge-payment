@@ -1,5 +1,4 @@
 ﻿using ControladorPagamento.Application.Commands;
-using ControladorPagamento.Application.Responses;
 using ControladorPagamento.Contracts;
 using MediatR;
 

@@ -1,5 +1,6 @@
 ﻿using ControladorPagamento.Messaging.Messages;
 using MassTransit;
+using MassTransit.Serialization;
 using System.Net.Mime;
 
 namespace ControladorPagamento.Messaging.Producers;
@@ -21,9 +22,8 @@ public class MessageSender : IMessageSender
         Uri url = new Uri($"queue:{fila}");
         var endpoint = await _bus.GetSendEndpoint(url);
 
-        await endpoint.Send(message, context =>
-        {
-            context.ContentType = new ContentType("application/json");
-        });
+        await endpoint.Send(message);
+
+        _logger.LogInformation("Finaliza envio da mensagem para fila");
     }
 }

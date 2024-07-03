@@ -1,5 +1,6 @@
 ﻿using ControladorPagamento.Application.Commands;
 using ControladorPagamento.Contracts;
+using ControladorPagamento.Entities;
 using ControladorPagamento.Entities.Exceptions;
 using ControladorPagamento.Presenters;
 using MediatR;
@@ -19,21 +20,21 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     /// <summary>
     /// Realiza pagamento do pedido
     /// </summary>
-    /// <param name="pedidoId">Id do pedido</param>
+    /// <param name="pedido">Pedido</param>
     /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     [HttpPut("pagar/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(Guid pedidoId)
+    public async Task<IActionResult> Put(Pedido pedido)
     { 
-        //var result = await _mediator.Send(new PagarCommand { Pedido = pedido });
+        var result = await _mediator.Send(new PagarCommand { Pedido = pedido });
 
-        //if (result.Status == "201")
-        //{
-        //    CreatedAtAction(nameof(Put), $"Efetuando pagamento do pedido { result.PedidoId }");
-        //}
-        //return BadRequest($"Erro ao efetuar pagamento do pedido { result.PedidoId }");
+        if (result)
+        {
+            CreatedAtAction(nameof(Put), $"Efetuando pagamento do pedido { pedido.Id }");
+        }
+        return BadRequest($"Erro ao efetuar pagamento do pedido { pedido.Id }");
         throw new NotImplementedException();
     }
 
@@ -83,14 +84,14 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] PagamentoWebhookDto pagamentoWebhookDto)
     {
-        //var result = await _mediator.Send(new PagamentoWebhookCommand 
-        //{ PedidoId = pagamentoWebhookDto.PedidoId, Aprovado = pagamentoWebhookDto.Aprovado, Motivo = pagamentoWebhookDto.Motivo });
+        var result = await _mediator.Send(new PagamentoWebhookCommand 
+        { Pedido = pagamentoWebhookDto.Pedido, Aprovado = pagamentoWebhookDto.Aprovado, Motivo = pagamentoWebhookDto.Motivo });
         
-        //if (result.Status == "200")
-        //{
-        //    return Ok(result.PedidoId);
-        //}
-        //return BadRequest(result.PedidoId);
+        if (result)
+        {
+            return Ok(pagamentoWebhookDto.Pedido.Id);
+        }
+        return BadRequest(pagamentoWebhookDto.Pedido.Id);
         throw new NotImplementedException();
     }
 

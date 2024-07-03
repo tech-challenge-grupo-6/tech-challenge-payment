@@ -1,5 +1,4 @@
-﻿using ControladorPagamento.Application.UseCases;
-using ControladorPagamento.Contracts;
+﻿using ControladorPagamento.Contracts;
 
 namespace ControladorPagamento.Application.UseCases.DependencyInjection;
 

@@ -47,7 +47,6 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ControladorPagamento.xml"));
 });
 
-
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMessageSender, MessageSender>();
@@ -111,6 +110,9 @@ builder.Services.AddMassTransit(x =>
             e.ConfigureConsumer<PedidoConsumer>(context);
             e.ConfigureConsumeTopology = false;
         });
+
+        cfg.UseRawJsonSerializer(RawSerializerOptions.AddTransportHeaders | RawSerializerOptions.CopyHeaders);
+
     });
 });
 builder.Services.AddScoped<MessageSender>();

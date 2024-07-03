@@ -1,5 +1,4 @@
 ﻿using ControladorPagamento.Entities.Shared;
-using ControladorPagamento.Messaging.Messages;
 
 namespace ControladorPagamento.Entities;
 
