@@ -1,13 +1,12 @@
 ﻿using ControladorPagamento.Entities;
-using ControladorPagamento.Entities.Shared;
 
 namespace ControladorPagamento.Contracts;
 
 public interface IPagamentoUseCase
 {
-    Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token);
+    Task EfetuarMercadoPagoQRCodeAsync(Pedido pedido);
     Task<Pagamento> ConsultarPagamentoPeloPedido(Guid pedidoId);
-    Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo, string? token);
+    Task<Guid?> ConcluirPagamento(Pedido pedido, bool aprovado, string? motivo);
     Task<bool> ObterStatusDoPedidoAsync(Guid pedidoId);
     Task<Pedido?> ObterPedidoPorIdAsync(Guid pedidoId, string? token);
 }

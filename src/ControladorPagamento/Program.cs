@@ -1,11 +1,14 @@
 using System.Net;
+using System.Net.Mime;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ControladorPagamento.Contracts;
+using ControladorPagamento.Application.UseCases.DependencyInjection;
 using ControladorPagamento.Gateways.DependencyInjection;
 using ControladorPagamento.Infrastructure.DataBase.DependencyInjection;
-using ControladorPagamento.UseCases;
-using ControladorPagamento.UseCases.DependencyInjection;
+using ControladorPagamento.Messaging.Consumers;
+using ControladorPagamento.Messaging.Producers;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -44,12 +47,16 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ControladorPagamento.xml"));
 });
 
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IMessageSender, MessageSender>();
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddRepositories();
 builder.Services.AddUseCases();
-builder.Services.AddScoped<IFilaSQS, FilaSQS>();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddHttpClient();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -81,6 +88,32 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = true
     };
 });
+
+
+builder.Services.AddMassTransit(x =>
+{
+
+    x.AddConsumer<PedidoConsumer>();
+    x.UsingAmazonSqs((context, cfg) =>
+    {
+        cfg.Host("us-east-1", h =>
+        {
+            h.AccessKey(builder.Configuration["AWS:AccessKey"]);
+            h.SecretKey(builder.Configuration["AWS:SecretKey"]);
+        });
+
+        cfg.ReceiveEndpoint("pedido-criado", e =>
+        {
+            e.DefaultContentType = new ContentType("application/json");
+            e.UseRawJsonDeserializer();
+            e.PrefetchCount = 1;
+            e.UseMessageRetry(r => r.Interval(2, 10));
+            e.ConfigureConsumer<PedidoConsumer>(context);
+            e.ConfigureConsumeTopology = false;
+        });
+    });
+});
+builder.Services.AddScoped<MessageSender>();
 
 var app = builder.Build();
 

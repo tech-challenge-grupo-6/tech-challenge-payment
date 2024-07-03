@@ -1,16 +1,16 @@
 ﻿using ControladorPagamento.Entities.Shared;
+using ControladorPagamento.Messaging.Messages;
 
 namespace ControladorPagamento.Entities;
 
 public class Pedido : EntityBase
 {
-    public virtual Cliente? Cliente { get; set; } = null!;
-    public Guid? ClienteId { get; set; }
     public Status Status { get; set; } = Status.Criado;
+    public Guid? ClienteId { get; set; }
     public virtual ICollection<Produto> Produtos { get; set; } = null!;
     public double ValorTotal { get; set; }
     public virtual Pagamento? Pagamento { get; set; }
-    public Guid? PagamentoId { get; set; }
+    public bool Pago { get; set; } = false;
 
     public Pagamento GerarPagamento(MetodoPagamento metodoPagamento)
     {
