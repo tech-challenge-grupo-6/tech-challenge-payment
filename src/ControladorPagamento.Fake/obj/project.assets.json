@@ -1424,6 +1424,7 @@
     "net8.0": [
       "AutoMapper >= 13.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
+      "MassTransit >= 8.2.3",
       "MassTransit.AmazonSQS >= 8.2.3",
       "MediatR >= 12.3.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
@@ -1482,6 +1483,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[12.0.1, )"
+          },
+          "MassTransit": {
+            "target": "Package",
+            "version": "[8.2.3, )"
           },
           "MassTransit.AmazonSQS": {
             "target": "Package",

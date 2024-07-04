@@ -22,6 +22,7 @@
     <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="3.0.1" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="AWSSDK.SQS" Version="3.7.301.19" />
+    <PackageReference Include="MassTransit" Version="8.2.3" />
     <PackageReference Include="MassTransit.AmazonSQS" Version="8.2.3" />
     <PackageReference Include="MassTransit.Newtonsoft" Version="8.2.3" />
     <PackageReference Include="MediatR" Version="12.3.0" />

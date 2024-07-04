@@ -15,7 +15,7 @@ public class MessageSender : IMessageSender
         _bus = bus;
         _logger = logger;
     }
-    public async Task SendMessageAsync(PedidoMessage message, string fila)
+    public async Task SendMessageAsync(Object message, string fila)
     {
         _logger.LogInformation("Inicia o envio da mensagem para fila");
 

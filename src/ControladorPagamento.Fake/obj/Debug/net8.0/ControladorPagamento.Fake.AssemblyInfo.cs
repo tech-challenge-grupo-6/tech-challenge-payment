@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ControladorPagamento.Fake")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d387fc088fc685ce6db43f3a221ce8585230876")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1f107cc2c278de151cb671b48064ad5d61e6921")]
 [assembly: System.Reflection.AssemblyProductAttribute("ControladorPagamento.Fake")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ControladorPagamento.Fake")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

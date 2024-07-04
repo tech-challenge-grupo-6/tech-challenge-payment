@@ -7,8 +7,10 @@ using ControladorPagamento.Application.UseCases.DependencyInjection;
 using ControladorPagamento.Gateways.DependencyInjection;
 using ControladorPagamento.Infrastructure.DataBase.DependencyInjection;
 using ControladorPagamento.Messaging.Consumers;
+using ControladorPagamento.Messaging.Messages;
 using ControladorPagamento.Messaging.Producers;
 using MassTransit;
+using MassTransit.Internals;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -110,6 +112,17 @@ builder.Services.AddMassTransit(x =>
             e.ConfigureConsumer<PedidoConsumer>(context);
             e.ConfigureConsumeTopology = false;
         });
+
+        cfg.ReceiveEndpoint("pagamento-status", e =>
+        {
+            e.DefaultContentType = new ContentType("application/json");
+            e.UseRawJsonDeserializer();
+            e.PrefetchCount = 1;
+            e.UseMessageRetry(r => r.Interval(2, 10));
+            e.ConfigureConsumeTopology = false;
+        });
+
+        cfg.Message<PagamentoMessage>(m => m.SetEntityName("pagamento-status"));
 
         cfg.UseRawJsonSerializer(RawSerializerOptions.AddTransportHeaders | RawSerializerOptions.CopyHeaders);
 

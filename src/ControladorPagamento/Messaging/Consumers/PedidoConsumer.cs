@@ -49,7 +49,14 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
                         Produtos = context.Message.Produtos,
                     };
 
+                    var messagePagamento = new PagamentoMessage()
+                    {
+                        IdPedido = context.Message.Id,
+                        Status = true
+                    };
+
                     await _messageSender.SendMessageAsync(message, "pedido-atualizado");
+                    await _messageSender.SendMessageAsync(messagePagamento, "pagamento-status");
                 }
             }
         }

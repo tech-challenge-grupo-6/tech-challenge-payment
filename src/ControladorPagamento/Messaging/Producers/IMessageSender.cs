@@ -4,5 +4,5 @@ namespace ControladorPagamento.Messaging.Producers;
 
 public interface IMessageSender
 {
-    Task SendMessageAsync(PedidoMessage message, string fila);
+    Task SendMessageAsync(Object message, string fila);
 }
