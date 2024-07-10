@@ -58,13 +58,24 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
                     await _messageSender.SendMessageAsync(message, "pedido-atualizado");
                     await _messageSender.SendMessageAsync(messagePagamento, "pagamento-status");
                 }
+                else await ErroAoProcessarPedidoAsync(context);
             }
+            else await ErroAoProcessarPedidoAsync(context);
+        
         }
         catch (Exception)
         {
-            _logger.LogError("Erro ao receber a mensagem.");
+            _logger.LogError("Erro ao receber a mensagem."); 
             throw;
         }
 
+
+    }
+    private async Task ErroAoProcessarPedidoAsync(ConsumeContext<PedidoMessage> context)
+    {
+        _logger.LogError("Enviando mensagem de erro ao processar o pagamento do pedido.");
+
+        await _messageSender.SendMessageAsync(context.Message, "pedido-atualizado");
+        await _messageSender.SendMessageAsync(new PagamentoMessage { IdPedido = context.Message.Id, Status = false }, "pagamento-status");
     }
 }
