@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ControladorPagamento.Application.Commands;
 using ControladorPagamento.Entities;
+using ControladorPagamento.Entities.Shared;
 using ControladorPagamento.Messaging.Messages;
 using ControladorPagamento.Messaging.Producers;
 using MassTransit;
@@ -44,7 +45,7 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
                     var message = new PedidoMessage()
                     {
                         Id = context.Message.Id,
-                        Status = context.Message.Status,
+                        Status = Status.EmProgresso,
                         ClienteId = context.Message.ClienteId,
                         ValorTotal = context.Message.ValorTotal,
                         Pago = true,
