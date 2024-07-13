@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControladorPagamento", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControladorPagamento.Fake", "src\ControladorPagamento.Fake\ControladorPagamento.Fake.csproj", "{94AB8DA6-250C-44A1-BB6E-B375576E5576}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPagamentoTest", "ControladorPagamento\ControladorPagamentoTest.csproj", "{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{94AB8DA6-250C-44A1-BB6E-B375576E5576}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94AB8DA6-250C-44A1-BB6E-B375576E5576}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94AB8DA6-250C-44A1-BB6E-B375576E5576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +38,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3F2F1AD2-C43A-421A-93DD-4EAA6E1E7820} = {840F9EAE-591C-4172-BA8F-4512ABB6D3F7}
 		{94AB8DA6-250C-44A1-BB6E-B375576E5576} = {840F9EAE-591C-4172-BA8F-4512ABB6D3F7}
+		{C1B084D3-BFF4-4D43-A32A-0A0B6DC0C46D} = {B9C52D58-FE09-4F65-8CFE-B931A7CF130C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54558DA4-4ABA-49DA-AAFF-456186C4D6D6}
 	EndGlobalSection
 EndGlobal

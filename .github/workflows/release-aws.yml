@@ -105,6 +105,13 @@ jobs:
             --from-literal=username=${{ secrets.MYSQL_USERNAME }} \
             --from-literal=password=${{ secrets.MYSQL_PASSWORD }}
 
+      - name: Create Kubernetes secret - AWS
+        run: |
+          kubectl delete secret generic aws --ignore-not-found
+          kubectl create secret generic aws \
+            --from-literal=access-key-id=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            --from-literal=secret-access-key=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Kubernetes Apply
         run: |
           kubectl apply -f ./kubernetes-aws/

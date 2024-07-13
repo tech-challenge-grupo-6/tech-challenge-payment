@@ -42,6 +42,17 @@ spec:
               value: "__CLIENT_ID__"
             - name: ASPNETCORE_ENVIRONMENT
               value: SUT
+            - name: AWS__AccessKey
+            valueFrom:
+              secretKeyRef:
+                name: aws
+                key: access-key-id
+            - name: AWS__SecretKey
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: secret-access-key
+
           ports:
             - containerPort: 5004
           resources:
