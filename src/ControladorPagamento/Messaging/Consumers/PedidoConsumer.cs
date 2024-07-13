@@ -53,8 +53,8 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
 
                     var messagePagamento = new PagamentoMessage()
                     {
-                        orderId = context.Message.Id,
-                        status = true
+                        OrderId = context.Message.Id,
+                        Status = true
                     };
 
 
@@ -79,8 +79,8 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
         _logger.LogError("Enviando mensagem de erro ao processar o pagamento do pedido.");
         var messageOrder = new PagamentoMessage
         {
-            orderId = context.Message.Id,
-            status = false
+            OrderId = context.Message.Id,
+            Status = false
         };
 
         await _messageSender.SendMessageAsync(context.Message, "pedido-atualizado");
