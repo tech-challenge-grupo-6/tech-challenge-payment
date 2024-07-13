@@ -5,6 +5,7 @@ using ControladorPagamento.Messaging.Messages;
 using ControladorPagamento.Messaging.Producers;
 using MassTransit;
 using MediatR;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ControladorPagamento.Messaging.Consumers;
@@ -52,14 +53,13 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
 
                     var messagePagamento = new PagamentoMessage()
                     {
-                        IdPedido = context.Message.Id,
-                        Status = true
+                        orderId = context.Message.Id,
+                        status = true
                     };
 
-                    JObject messageOrder = RetornarErroPagamentoOrder(context);
 
                     await _messageSender.SendMessageAsync(message, "pedido-atualizado");
-                    await _messageSender.SendMessageAsync(messageOrder, "pagamento-status");
+                    await _messageSender.SendMessageAsync(messagePagamento, "pagamento-status");
                 }
                 else await ErroAoProcessarPedidoAsync(context);
             }
@@ -77,18 +77,13 @@ public class PedidoConsumer : IConsumer<PedidoMessage>
     private async Task ErroAoProcessarPedidoAsync(ConsumeContext<PedidoMessage> context)
     {
         _logger.LogError("Enviando mensagem de erro ao processar o pagamento do pedido.");
-        JObject messageOrder = RetornarErroPagamentoOrder(context);
+        var messageOrder = new PagamentoMessage
+        {
+            orderId = context.Message.Id,
+            status = false
+        };
 
         await _messageSender.SendMessageAsync(context.Message, "pedido-atualizado");
         await _messageSender.SendMessageAsync(messageOrder, "pagamento-status");
-    }
-
-    private static JObject RetornarErroPagamentoOrder(ConsumeContext<PedidoMessage> context)
-    {
-        return new JObject
-        {
-            ["orderId"] = context.Message.Id,
-            ["status"] = false,
-        };
     }
 }
