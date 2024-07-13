@@ -43,10 +43,10 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: SUT
             - name: AWS__AccessKey
-            valueFrom:
-              secretKeyRef:
-                name: aws
-                key: access-key-id
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: access-key-id
             - name: AWS__SecretKey
               valueFrom:
                 secretKeyRef:
