@@ -34,3 +34,14 @@ C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\Controlad
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\obj\Debug\net8.0\ControladorPagamento.Fake.pdb
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\obj\Debug\net8.0\ControladorPagamento.Fake.genruntimeconfig.cache
 C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\obj\Debug\net8.0\ref\ControladorPagamento.Fake.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MediatR.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\AWSSDK.Core.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\AWSSDK.SimpleNotificationService.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\AWSSDK.SQS.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MassTransit.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MassTransit.Abstractions.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\MassTransit.AmazonSqsTransport.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\victor\Desktop\tech-challenge-fiap\tech-challenge-payment\src\ControladorPagamento.Fake\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

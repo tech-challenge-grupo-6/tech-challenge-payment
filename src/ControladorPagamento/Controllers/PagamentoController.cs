@@ -1,6 +1,9 @@
-﻿using ControladorPagamento.Contracts;
+﻿using ControladorPagamento.Application.Commands;
+using ControladorPagamento.Contracts;
+using ControladorPagamento.Entities;
 using ControladorPagamento.Entities.Exceptions;
 using ControladorPagamento.Presenters;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,35 +12,30 @@ namespace ControladorPagamento.Controllers;
 [ApiController]
 [Authorize]
 [Route("[controller]")]
-public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger) : ControllerBase
+public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger, IMediator _mediator) : ControllerBase
 {
 
-    private string? token;
     private bool statusDoPedido = false;
 
     /// <summary>
     /// Realiza pagamento do pedido
     /// </summary>
-    /// <param name="pedidoId">Id do pedido</param>
+    /// <param name="pedido">Pedido</param>
     /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     [HttpPut("pagar/{pedidoId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(Guid pedidoId)
-    {
-        try
+    public async Task<IActionResult> Put(Pedido pedido)
+    { 
+        var result = await _mediator.Send(new PagarCommand { Pedido = pedido });
+
+        if (result)
         {
-            logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
-            token = HttpContext.Request.Headers["Authorization"];
-            await pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId, token);
-            return CreatedAtAction(nameof(Put), new { message = "Pedido de pagamento efetuado com sucesso" });
+            CreatedAtAction(nameof(Put), $"Efetuando pagamento do pedido { pedido.Id }");
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
-            return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
-        }
+        return BadRequest($"Erro ao efetuar pagamento do pedido { pedido.Id }");
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -86,23 +84,15 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] PagamentoWebhookDto pagamentoWebhookDto)
     {
-        var (pedidoId, aprovado, motivo) = pagamentoWebhookDto;
-        try
+        var result = await _mediator.Send(new PagamentoWebhookCommand 
+        { Pedido = pagamentoWebhookDto.Pedido, Aprovado = pagamentoWebhookDto.Aprovado, Motivo = pagamentoWebhookDto.Motivo });
+        
+        if (result)
         {
-            logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
-            token = HttpContext.Request.Headers["Authorization"];
-            Guid? pagamentoId = await pagamentoUseCase.ConcluirPagamento(pedidoId, aprovado, motivo, token);
-            if (pagamentoId is null)
-            {
-                return BadRequest($"Pagamento do pedido {pedidoId} não foi aprovado. Motivo: {motivo}");
-            }
-            return CreatedAtAction(nameof(Post), new { id = pagamentoId });
+            return Ok(pagamentoWebhookDto.Pedido.Id);
         }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
-            return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
-        }
+        return BadRequest(pagamentoWebhookDto.Pedido.Id);
+        throw new NotImplementedException();
     }
 
     /// <summary>

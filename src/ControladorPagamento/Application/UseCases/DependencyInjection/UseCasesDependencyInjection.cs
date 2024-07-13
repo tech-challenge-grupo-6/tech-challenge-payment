@@ -1,6 +1,6 @@
 ﻿using ControladorPagamento.Contracts;
 
-namespace ControladorPagamento.UseCases.DependencyInjection;
+namespace ControladorPagamento.Application.UseCases.DependencyInjection;
 
 public static class UseCasesDependencyInjection
 {

@@ -1,3 +1,5 @@
-﻿namespace ControladorPagamento.Presenters;
+﻿using ControladorPagamento.Entities;
 
-public record class PagamentoWebhookDto(Guid PedidoId, bool Aprovado, string? Motivo);
+namespace ControladorPagamento.Presenters;
+
+public record class PagamentoWebhookDto(Pedido Pedido, bool Aprovado, string? Motivo);

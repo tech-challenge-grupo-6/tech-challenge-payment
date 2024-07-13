@@ -1,45 +1,31 @@
-﻿using ControladorPagamento.Contracts;
-using ControladorPagamento.Entities;
+﻿using ControladorPagamento.Entities;
 using ControladorPagamento.Entities.Repositories;
 using ControladorPagamento.Entities.Shared;
 using ControladorPagamento.Entities.Exceptions;
 using ControladorPagamento.Presenters;
 using System.Net.Http.Headers;
+using ControladorPagamento.Contracts;
 
-namespace ControladorPagamento.UseCases;
+
+namespace ControladorPagamento.Application.UseCases;
 
 public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
     IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
-    public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId, string? token)
+    public async Task EfetuarMercadoPagoQRCodeAsync(Pedido pedido)
     {
-        logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
+        logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedido.Id);
         try
         {
-            Pedido? pedido = await ObterPedidoPorIdAsync(pedidoId, token);
-
-            if (pedido is null)
-            {
-                logger.LogError("Pedido {PedidoId} não encontrado", pedidoId);
-                throw new Exception($"Pedido {pedidoId} não encontrado");
-            }
-
-            if (pedido.Status != Status.Criado)
-            {
-                logger.LogError("Pedido {PedidoId} não pode ser pago", pedidoId);
-                throw new Exception($"Pedido {pedidoId} não pode ser pago");
-            }
-
             string? pagamentoUrl = configuration.GetValue<string>("PagamentoUrl");
-            PagamentoDto pagamentoDto = new(pedidoId, pedido.ValorTotal, pedido.ClienteId);
+            PagamentoDto pagamentoDto = new(pedido.Id, pedido.ValorTotal, pedido.ClienteId);
             await httpClient.PostAsJsonAsync(pagamentoUrl, pagamentoDto);
 
-            logger.LogInformation("Pagamento do pedido {PedidoId} solicitado com sucesso", pedidoId);
-
+            logger.LogInformation("Pagamento do pedido {PedidoId} solicitado com sucesso", pedido.Id);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
+            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedido.Id);
             throw;
         }
     }
@@ -59,29 +45,28 @@ public class PagamentoUseCase(ILogger<PagamentoUseCase> logger,
         }
     }
 
-    public async Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo, string? token)
+    public async Task<Guid?> ConcluirPagamento(Pedido pedido, bool aprovado, string? motivo)
     {
-        logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
+        logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedido.Id);
         try
         {
             if (!aprovado)
             {
-                logger.LogWarning("Pagamento do pedido {PedidoId} não foi aprovado, motivo: {motivo}", pedidoId, motivo);
+                logger.LogWarning("Pagamento do pedido {PedidoId} não foi aprovado, motivo: {motivo}", pedido.Id, motivo);
                 return null;
             }
             else
             {
-                var pedido = await ObterPedidoPorIdAsync(pedidoId, token) ?? throw new NotFoundException("Pedido não encontrado.");
                 Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
 
                 await pagamentoRepository.Add(pagamento);
-                logger.LogInformation("Pagamento do pedido {PedidoId} concluído com sucesso", pedidoId);
+                logger.LogInformation("Pagamento do pedido {PedidoId} concluído com sucesso", pedido.Id);
                 return pagamento.Id;
             }
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Erro ao concluir pagamento do pedido {PedidoId}", pedidoId);
+            logger.LogError(ex, "Erro ao concluir pagamento do pedido {PedidoId}", pedido.Id);
             throw;
         }
     }
