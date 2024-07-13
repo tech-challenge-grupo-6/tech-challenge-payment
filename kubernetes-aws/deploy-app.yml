@@ -29,7 +29,7 @@ spec:
                   name: mysql-credentials
                   key: password
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=mysql-service;Database=controlador_pagametos;User=$(MYSQL_USER);Password=$(MYSQL_PASSWORD);port=3306;SslMode=None"
+              value: "Server=mysql-service;Database=controlador_pagamentos;User=$(MYSQL_USER);Password=$(MYSQL_PASSWORD);port=3306;SslMode=None"
             - name: PagamentoUrl
               value: http://controladorpagamento-fake:5083/pagar
             - name: PedidoUrl
